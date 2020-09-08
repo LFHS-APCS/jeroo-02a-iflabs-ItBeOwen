@@ -10,7 +10,16 @@ public class Jeroo extends JerooBase {
      */
     public void faceEast()
     {
-
+        if (isFacing(NORTH)) {
+          turn(RIGHT);
+        }
+        if (isFacing(SOUTH)) {
+          turn(LEFT);
+        }
+        if (isFacing(WEST)) {
+          turn(RIGHT);
+          turn(RIGHT);
+        }
     }
 
     /**
@@ -21,7 +30,25 @@ public class Jeroo extends JerooBase {
      */
     public boolean isLeftBlocked()
     {
-        return false;
+        if (isWater(LEFT)) {
+          return true;
+        } else {
+          turn(LEFT);
+          hop();
+          if (isWater(AHEAD)) {
+            turn(RIGHT);
+            turn(RIGHT);
+            hop();
+            turn(LEFT);
+            return true;
+          } else {
+            turn(RIGHT);
+            turn(RIGHT);
+            hop();
+            turn(LEFT);
+            return false;
+          }
+        }
     }
 
     /**
@@ -33,7 +60,26 @@ public class Jeroo extends JerooBase {
      */
     public void findNextDirection()
     {
-
+      if (isFlower(AHEAD)) {
+        hop();
+        pick();
+        if (isFlower(AHEAD)) {
+          hop();
+          pick();
+          turn(LEFT);
+          turn(LEFT);
+          hop();
+          hop();
+          turn(LEFT);
+        } else {
+          turn(LEFT);
+          turn(LEFT);
+          hop();
+          turn(RIGHT);
+        }
+      } else {
+        turn(LEFT);
+      }
     }
 
     /**
@@ -46,7 +92,27 @@ public class Jeroo extends JerooBase {
      */
     public boolean isWayBlocked()
     {
-        return false;
+        if (isWater(LEFT)) {
+          if (isWater(AHEAD)) {
+            if (isWater(RIGHT)) {
+              turn(LEFT);
+              turn(LEFT);
+              if (isWater(AHEAD)) {
+                return true;
+              } else {
+                turn(LEFT);
+                turn(LEFT);
+                return true;
+              }
+            } else {
+              return false;
+            }
+          } else {
+            return false;
+          }
+        } else {
+          return false;
+        }
     }
 
 
@@ -56,7 +122,43 @@ public class Jeroo extends JerooBase {
      */
     public void carpetRoom()
     {
-
+      checkRoom();
+      checkRoom();
+      checkRoom();
+      checkRoom();
+      checkRoom();
+      checkRoom();
+      checkRoom();
+      checkRoom();
+      checkRoom();
+      checkRoom();
+      checkRoom();
+      checkRoom();
+      checkRoom();
+      checkRoom();
+      checkRoom();
+      checkRoom();
+    }
+    public boolean checkRoom() {
+      if(isWater(LEFT)) {
+        hop();
+      } else {
+        turn(LEFT);
+        hop();
+        if(isWater(LEFT)) {
+          if(isWater(AHEAD)) {
+            if(isWater(RIGHT)) {
+              plant();
+            } 
+          }
+        }
+        turn(LEFT);
+        turn(LEFT);
+        hop();
+        turn(LEFT);
+        hop();
+      }
+      return true;
     }
 
 
